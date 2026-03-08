@@ -167,8 +167,8 @@ export default function Home() {
   };
 
   return (
-    // We use h-[100dvh] to perfectly fit the view height on all devices, overflow-hidden to prevent body scroll
-    <main className="h-[100dvh] w-full bg-white text-gray-900 font-sans flex flex-col relative overflow-hidden">
+    // We use lg:h-[100dvh] to fit the view height on desktop, but allow scrolling on mobile
+    <main className="min-h-[100dvh] lg:h-[100dvh] w-full bg-white text-gray-900 font-sans flex flex-col relative lg:overflow-hidden">
 
       {/* Background decoration matching the reference image's soft blue blob */}
       <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-blue-50 blur-[100px] pointer-events-none -z-10"></div>
@@ -201,10 +201,10 @@ export default function Home() {
       </header>
 
       {/* Main Content Area - constrained to remain inside the screen height */}
-      <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8 overflow-hidden z-10 relative">
+      <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8 lg:overflow-hidden z-10 relative pb-10 lg:pb-8">
 
         {/* LEFT COLUMN: Controls */}
-        <div className="w-full lg:w-[420px] shrink-0 h-full flex flex-col bg-gray-50/50 border border-gray-100 rounded-[2rem] p-6 sm:p-8 shadow-sm overflow-y-auto">
+        <div className="w-full lg:w-[420px] shrink-0 lg:h-full flex flex-col bg-gray-50/50 border border-gray-100 rounded-[2rem] p-6 sm:p-8 shadow-sm lg:overflow-y-auto">
 
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-2">
@@ -366,10 +366,10 @@ export default function Home() {
         </div>
 
         {/* RIGHT COLUMN: Script Input & Output (and History overlay) */}
-        <div className="flex-1 h-full flex flex-col gap-6 overflow-hidden relative">
+        <div className="flex-1 lg:h-full flex flex-col gap-6 lg:overflow-hidden relative min-h-[500px] lg:min-h-0">
 
           {/* MAIN EDITOR */}
-          <div className="flex-1 bg-white border border-gray-100 rounded-[2rem] p-6 sm:p-8 shadow-sm flex flex-col min-h-0 relative">
+          <div className="flex-1 bg-white border border-gray-100 rounded-[2rem] p-6 sm:p-8 shadow-sm flex flex-col min-h-[400px] lg:min-h-0 relative">
 
             <div className="flex items-center justify-between mb-4 shrink-0 border-b border-gray-100 pb-4">
               <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
