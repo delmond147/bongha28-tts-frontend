@@ -108,10 +108,13 @@ export default function Home() {
         throw new Error(errStr);
       }
 
-      // Backend returns JSON with the completed audio_url immediately
+      // Backend returns JSON with the completed audio_url immediately (now a relative path)
       const data = await response.json();
       setCurrentJobId(data.filename ? data.filename.split('_')[1].split('.')[0] : null);
-      setAudioUrl(data.audio_url);
+
+      // Ensure we prepend the API_URL so the frontend knows where to fetch it
+      const fullAudioUrl = data.audio_url.startsWith('http') ? data.audio_url : `${API_URL}${data.audio_url}`;
+      setAudioUrl(fullAudioUrl);
       fetchHistory(); // Refresh history immediately since it's saved
 
     } catch (err: any) {
@@ -507,10 +510,12 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Ensure history audio URLs are fully qualified */}
                         <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 rounded-xl border border-gray-100">
-                          <audio controls className="w-full h-10 outline-none" src={item.audio_url}></audio>
+                          <audio controls className="w-full h-10 outline-none" src={item.audio_url.startsWith('http') ? item.audio_url : `${API_URL}${item.audio_url}`}></audio>
                           <button
-                            onClick={() => handleDownload(item.audio_url, `bongha28-${fileNum}.wav`)}
+                            onClick={() => handleDownload(item.audio_url.startsWith('http') ? item.audio_url : `${API_URL}${item.audio_url}`, `bongha28-${fileNum}.wav`)}
                             className="shrink-0 text-sm font-bold text-gray-600 hover:text-black hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center cursor-pointer"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
